@@ -1,0 +1,79 @@
+public class Contacts{
+    /**
+     * Third Challenge.
+     */
+    
+    /*
+    Input:  4   //# of operations.
+            add hack
+            add hackerrank
+            find hac
+            find hak
+    */
+    
+    public static Node root;
+    public static int counter = 0;
+    public static void main(String[] args){
+        int found = 0;
+        int ops = SupportClass.SC().nextInt();
+        
+        int index = 0;
+        while(ops != index){
+            String[] input = SupportClass.SC().nextLine().split(" ");
+            
+            if(input[0].equals("add")){addTree(input[1]);}
+            else if(input[0].equals("find")){found += findTree(root, input[1]);}
+            
+        index++;}System.out.println(found);
+    }
+
+    private static void addTree(String name){
+        int phone = randomNumber(1, 1000);
+        Node child = new Node(phone, name);
+        
+        if(root == null){root = child;}
+        else{
+            Node node = root;
+            Node parent;
+            
+            while(true){
+                parent = node;
+                if(phone < node.key){node = node.leftChild;
+                    if(node == null){parent.leftChild = child; return;}
+                }else{
+                    node = node.rightChild;
+                    if(node == null){parent.rightChild = child; return;}
+                }
+            }
+        }
+    }
+    private static int findTree(Node node, String name){
+        String pattern = name.concat("*");
+        Pattern P = Pattern.compile(pattern);
+        Matcher M = P.matcher(node.value);
+
+        if(node.leftChild != null){
+            findTree(node.leftChild, name);
+        }
+
+        if(M.find()){counter++;}
+
+        if(node.rightChild != null){
+            findTree(node.rightChild, name);
+        }
+
+        return counter;
+    }
+    public static void inOrdenTraverse(Node node){
+        if(node != null){
+            inOrdenTraverse(node.leftChild);
+            System.out.println(node);
+            inOrdenTraverse(node.rightChild);
+        }
+    }
+    private static int randomNumber(int min, int max){
+        Random R = new Random();
+        int random = R.nextInt(max - min + 1);
+        return random;
+    }
+}
