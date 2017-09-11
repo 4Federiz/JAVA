@@ -1,0 +1,47 @@
+public class LeftRotation{
+    /**
+     * First Challenge.
+     */
+
+    /*
+    Input:  5 4  <#elements, #Shifts>
+            1 2 3 4 5
+     */
+    public static int[] arrayLeftRotation(int[] a, int n, int k) {
+        if (a == null || n < 0) {
+            throw new IllegalArgumentException("-");
+        }
+
+//        int offset = k;
+        int offset = n - k % n;
+        if (offset > 0) {
+            int[] copy = a.clone();
+            
+            for (int i = 0; i < n; ++i) {
+                int j = (i + offset) % n;
+                a[i] = copy[j];
+            }
+        }
+        return a;
+    }
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int k = in.nextInt();
+        int a[] = new int[n];
+
+        for (int a_i = 0; a_i < n; a_i++) {
+            a[a_i] = in.nextInt();
+        }
+
+        int[] output = new int[n];
+        output = arrayLeftRotation(a, n, k);
+
+        for (int i = 0; i < n; i++) {
+            System.out.print(output[i] + " ");
+        }
+
+        System.out.println();
+    }
+}
