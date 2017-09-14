@@ -1,0 +1,85 @@
+/*
+    Given a sorted and rotated array (rotated at some point) A[ ], and given an element K, the task is to find the index of the given element K in the array A[ ]. The array has no duplicate elements. If the element does not exist in the array, print -1.
+
+
+    Input:
+    The first line of the input contains an integer T, depicting the total number of test cases. Then T test cases follow. Each test case consists of three lines. First line of each test case contains an integer N denoting the size of the given array. Second line of each test case contains N space separated integers denoting the elements of the array A[ ]. Third line of each test case contains an integer K denoting the element to be searched in the array.
+
+
+    Output:
+
+    Corresponding to each test case, print in a new line, the index of the element found in the array.  If element is not present, then print -1.
+
+
+    Constraints:
+
+    1 ≤ T ≤ 100
+    1 ≤ N ≤ 100005
+    0 ≤ A[i] ≤ 10000005
+    1 ≤ k ≤ 100005
+
+
+    Example:
+
+    Input
+    3
+    9
+    5 6 7 8 9 10 1 2 3
+    10
+    3 1 2
+    1
+    4
+    3 5 1 2
+    6
+
+
+    Output
+    5
+    1
+    -1
+ */
+
+package roadToPro;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class SearchRotatedArray{
+    private static Queue<Integer> fifo = new LinkedList<>();
+    public static void main(String[] args){
+        int T = 0;                                  //#Test cases.
+        int N = 0;                                  //Size of array.
+        ArrayList<Integer> A = new ArrayList<>();   //Elements of the array.
+        int K;                                      //Element searched in the array.
+        
+        Scanner SC = new Scanner(System.in);
+        System.out.println("Input:");
+        T = SC.nextInt();
+        
+        int x = T;
+        while(T != 0){
+            
+            N = SC.nextInt();
+            for(int i = 0; i < N; i++){
+                A.add(SC.nextInt());
+            }
+            
+            K = SC.nextInt();
+            isInArray(A, K);
+            T--;
+        }
+        
+        while(x != 0){
+            System.out.println(fifo.remove());
+            x--;
+        }
+    }
+    private static void isInArray(ArrayList a, int v){
+        if(a.contains(v)){
+            fifo.add(a.indexOf(v));
+        }else{
+            fifo.add(-1);
+        }
+    }
+}
