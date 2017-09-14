@@ -1,0 +1,68 @@
+/*    
+Given a string, the task is to remove all  duplicate characters from the string and print the resultant string.  
+The order of remaining characters in the output should be same as in the original string.
+
+    Input:
+    The first line of input contains an integer T denoting the number of test cases. The description of T test cases follows.
+    Each test case contains a string of length N.
+
+    Output:
+    Print the resultant substring after removing duplicate characters from string.
+
+    Constraints:
+    1 ≤ T ≤ 100
+    1 ≤ N ≤ 100
+
+    Example:
+    Input:
+    2
+    geeksforgeeks
+    HappyNewYear
+
+    Output:
+    geksfor
+    HapyNewYr
+*/
+
+package roadToPro;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+public class StringDuplicates{
+    private static Queue<String> fifo = new LinkedList<>();
+    public static void main(String[] args){
+        Scanner SC = new Scanner(System.in);
+        String output = "";
+        int i = 0;
+        
+        System.out.println("Input:");
+        int T = SC.nextInt();
+        i = T;
+        
+        do{
+            Output(SC.next());
+            T--;
+        }while(T != 0);
+        
+        for(int j = 0; j < i; j++){
+            System.out.println(fifo.remove());
+        }
+    }
+    
+    private static void Output(String inputString){
+        char[] inputToChar = inputString.toCharArray();
+        HashSet<Character> charSet = new LinkedHashSet<>();
+        for (char c : inputToChar){
+            charSet.add(c);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Character character : charSet){
+            sb.append(character);
+        }
+        fifo.add(sb.toString());
+    }
+}
