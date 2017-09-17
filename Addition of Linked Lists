@@ -1,0 +1,143 @@
+/*
+    Given two numbers represented by two lists, write a function that returns sum list. The sum list is list representation of addition of two input numbers.
+
+    Suppose you have two linked list 5->4 ( 4 5 )and 5->4->3( 3 4 5) you have to return  a resultant linked list 0->9->3 (3 9 0).
+
+    Input:
+
+    In this problem, method takes two argument: the head of the first and second linked list. The function should not read any input from stdin/console.
+    The struct Node has a data part which stores the data and a next pointer which points to the next element of the linked list. 
+    There are multiple test cases. For each test case, this method will be called individually.
+
+    Output:
+    Add  two numbers represented by linked lists.
+
+    Note: If you use "Test" or "Expected Output Button" use below example format
+    Constraints:
+
+    1<=T<=100
+
+    1<=N<=100
+    Example:
+
+    Input:
+
+    2
+
+    2
+
+    4 5
+
+    3
+
+    3 4 5
+
+    2
+
+    6 3
+
+    1
+
+    7
+
+    Output:
+
+    0 9 3 
+
+    0 7
+
+    Explaination:
+
+    5->4 //linked link repsentation of 4 5
+
+    5->4->3// linked list representation of 3 4 5
+
+    0->9 ->3 // linked list representation of 3 9 0 resultant linked list.
+*/
+
+package roadToPro;
+public class LinkedListAddTwoNumbers{
+    
+    static LinkedListNode result = new LinkedListNode();
+    static int residual = 0;
+    
+    static LinkedListNode addTwoLists(LinkedListNode first, LinkedListNode second){
+        
+        if(first != null && second != null){
+            result.data += first.data + second.data;
+            
+            if(residual != 0){
+                result.data += residual;
+                residual = 0;
+            }
+            
+            if(result.data > 9){
+                residual = result.data / 10;
+                result.data = Math.abs((residual * 10) - result.data);
+            }
+            
+            System.out.print(result.data + " ");
+            
+            result.next = addTwoLists(first.next, second.next);
+        }
+        
+        else{
+            if(first == null){
+                result.data = second.data;
+                
+                if(residual != 0){
+                result.data += residual;
+                residual = 0;
+                }
+
+                if(result.data > 9){
+                    residual = result.data / 10;
+                    result.data = Math.abs((residual * 10) - result.data);
+                }
+                
+                System.out.print(result.data + " ");
+            }
+            if(second == null){
+                result.data = first.data;
+                
+                if(residual != 0){
+                result.data += residual;
+                residual = 0;
+                }
+
+                if(result.data > 9){
+                    residual = result.data / 10;
+                    result.data = Math.abs((residual * 10) - result.data);
+                }
+                
+                System.out.print(result.data + " ");
+            }
+        }
+        
+        return result;
+    }
+    
+    public static void main(String[] args){
+        LinkedListNode L01 = new LinkedListNode(5);
+        LinkedListNode L02 = new LinkedListNode(4);
+        L01.next = L02;
+        
+        LinkedListNode L11 = new LinkedListNode(5);
+        LinkedListNode L12 = new LinkedListNode(4);
+        LinkedListNode L13 = new LinkedListNode(3);
+        L11.next = L12;
+        L12.next = L13;
+        
+        LinkedListNode R = addTwoLists(L01, L11);
+    }
+}
+
+
+
+
+public class LinkedListNode{
+        int data;
+        LinkedListNode next;
+        LinkedListNode(int d){data = d; next = null;}
+        LinkedListNode(){}
+}
