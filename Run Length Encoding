@@ -1,0 +1,66 @@
+/*
+    Given a string, Your task is to  complete the function encode that returns the run length encoded string for the given string.
+    eg if the input string is “wwwwaaadexxxxxx”, then the function should return “w4a3d1e1x6″.
+    You are required to complete the function encode that takes only one argument the string which is to be encoded and returns the encoded string.
+
+
+    Input (To be used only for expected output):
+    The first line contains T denoting no of test cases . Then T test cases follow . Each test case contains a string str which is to be encoded .
+
+    Output:
+    For each test case output in a single line the so encoded string .
+
+    Constraints:
+    1<=T<=100
+    1<=length of str<=100
+
+    Example:
+    Input
+    2
+    aaaabbbccc
+    abbbcdddd
+
+    Output
+    a4b3c3
+    a1b3c1d4
+*/
+package roadToPro;
+import java.util.Scanner;
+public class RunLengthEncoding{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String lengthOfStr;
+        
+//        int T = sc.nextInt();   //Number of test cases.
+//        
+//        while(T != 0){
+            String str = sc.nextLine() + " "; //String to be encoded.
+            lengthOfStr = encode(str);
+            System.out.println(lengthOfStr);
+//            T--;
+//        }
+    }
+    private static String encode(String str){
+        
+        int i;
+        char[] c = str.toCharArray();
+        int counter = 1;
+        char aux = c[0];
+        String proc = "";
+        
+        for(i = 1; i < c.length; i++){
+            
+            if(c[i] == aux){
+                counter++;
+                
+            }else{
+                proc += c[i - 1] + Integer.toString(counter);
+                counter = 1;
+            }
+            
+            aux = c[i];
+        }
+        
+        return proc;
+    }
+}
