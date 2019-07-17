@@ -1,0 +1,63 @@
+public class Solution {
+    public static class Trie {
+        public final Map<Character, Trie> m = new HashMap<>();
+        public boolean isWord = false;
+        
+        public boolean search(String s) {
+            Trie cur = this;
+            for (int i = 0; (i < s.length()) && (cur != null); ++i)
+                cur = cur.m.get(s.charAt(i));
+            
+            return ((cur != null) && (cur.isWord));
+        }
+        
+        public void insert(String s) {
+            Trie cur = this;
+            for (int i = 0; i < s.length(); ++i) {
+                if (!cur.m.containsKey(s.charAt(i)))
+                    cur.m.put(s.charAt(i), new Trie());
+                cur = cur.m.get(s.charAt(i));
+            }
+            
+            cur.isWord = true;
+        }
+    }
+    
+    public static class Pair {
+        public int f;
+        public int s;
+        public static Pair makePair(int f, int s) {
+            Pair p = new Pair();
+            p.f = f;
+            p.s = s;
+            return p;
+        }
+    }
+    
+    public int getGoodness(Trie dic, String review) {
+        int count = 0;
+        for (String word : review.split("_"))
+            count += (dic.search(word) ? 1 : 0);
+        return count;
+    }
+    
+    public ArrayList<Integer> solve(String goodWords, ArrayList<String> reviews) {
+        Trie dic = new Trie();
+        for (String goodWord : goodWords.split("_"))
+            dic.insert(goodWord);
+        
+        ArrayList<Pair> encodedReviews =  new ArrayList<>(reviews.size());
+        for (int i = 0; i < reviews.size(); ++i)
+            encodedReviews.add(Pair.makePair(
+                getGoodness(dic, reviews.get(i)), i));
+                
+        Collections.sort(encodedReviews, (p1, p2) -> 
+            ((p1.f != p2.f) ? (p2.f - p1.f) : (p1.s - p2.s)));
+        
+        ArrayList<Integer> result = new ArrayList<>(encodedReviews.size());
+        for (int i = 0; i < encodedReviews.size(); ++i)
+            result.add(encodedReviews.get(i).s);
+        
+        return result;
+    }
+}
