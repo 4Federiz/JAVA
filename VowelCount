@@ -1,0 +1,26 @@
+public class HelloWorld{
+
+    public static String method(String s){
+        s = s.toLowerCase().trim();
+        s = s.replace(" ", "");
+        
+        char[] c = s.toCharArray();
+        char[] v = {'a', 'e', 'i', 'o', 'u', 'y'};
+        
+        int contador = 0;
+        
+        for(int i = 0; i < c.length; i++){
+            for(int j = 0; j < v.length; j++){
+                if(c[i] == v[j]){
+                    contador++;
+                }
+            }
+        }
+        
+        return ("Vowels: " + contador + ". Consonants: " + String.valueOf(c.length - contador));
+    }
+
+     public static void main(String []args){
+        System.out.println(method("there is a quiet Mouse"));
+     }
+}
